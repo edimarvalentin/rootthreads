@@ -9,7 +9,13 @@
 
 #define DATASIZE 10000
 
+/**
+ * @brief Checks if a data.txt file exist or creates a new one with 10,000 unsigned 8-bit integers.
+ * @return 0 for new data, 1 for already existing data
+ */
 void *getData() {
+    clock_t t;
+    t = clock();
     int *status = malloc(sizeof(int));
     FILE *data = fopen("data.txt", "r");
     if (data == NULL) {
@@ -26,5 +32,9 @@ void *getData() {
     }else {
         *status = 1;
     }
+    t = clock() - t;
+    double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("Time taken for data thread: %f seconds\n", time_taken);
+    return NULL;
     pthread_exit(status);
 }
